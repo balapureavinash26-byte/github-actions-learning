@@ -33,3 +33,15 @@ jobs:
           echo "===== BUILD STARTED ====="
           echo "Building $APP_NAME..."
           echo "Build completed successfully!"
+           
+      - name: Check GitHub Secret
+        run: |
+          echo "===== SECRET CHECK ====="
+          if [ -n "$DEMO_SECRET" ]; then
+            echo "GitHub Secret is available."
+          else
+            echo "GitHub Secret is NOT available."
+            exit 1
+          fi
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
