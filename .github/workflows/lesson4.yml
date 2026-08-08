@@ -1,0 +1,35 @@
+name: Lesson 4 - Environment Variables
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+env:
+  APP_NAME: GitHub-Actions-Demo
+  ENVIRONMENT: Development
+
+jobs:
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Display Environment Variables
+        run: |
+          echo "===== APPLICATION INFORMATION ====="
+          echo "Application: $APP_NAME"
+          echo "Environment: $ENVIRONMENT"
+
+      - name: Build Application
+        run: |
+          echo "===== BUILD STARTED ====="
+          echo "Building $APP_NAME..."
+          echo "Build completed successfully!"
