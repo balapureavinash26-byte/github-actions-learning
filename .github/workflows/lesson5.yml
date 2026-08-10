@@ -1,0 +1,65 @@
+name: Lesson 5 - Job Dependencies and Outputs
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.build-info.outputs.version }}
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Application
+        run: |
+          echo "===== BUILD STARTED ====="
+          echo "Building application..."
+          echo "Build completed successfully!"
+
+      - name: Generate Build Version
+        id: build-info
+        run: |
+          VERSION="1.0.${{ github.run_number }}"
+          echo "Application version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+  test:
+    name: Test Application
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+
+      - name: Run Tests
+        run: |
+          echo "===== TEST STARTED ====="
+          echo "Running application tests..."
+          echo "All tests passed successfully!"
+
+      - name: Display Build Version
+        run: |
+          echo "Testing version: ${{ needs.build.outputs.version }}"
+
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+
+      - name: Deploy Application
+        run: |
+          echo "===== DEPLOY STARTED ====="
+          echo "Deploying application..."
+          echo "Application deployed successfully!"
