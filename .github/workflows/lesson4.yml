@@ -33,7 +33,17 @@ jobs:
           echo "===== BUILD STARTED ====="
           echo "Building $APP_NAME..."
           echo "Build completed successfully!"
-           
+          echo "Application: $APP_NAME" > build.txt
+          echo "Environment: $ENVIRONMENT" >> build.txt
+      
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-build
+          path: build.txt
+
+ 
       - name: Check GitHub Secret
         run: |
           echo "===== SECRET CHECK ====="
