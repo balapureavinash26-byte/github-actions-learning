@@ -23,13 +23,14 @@ jobs:
           echo "===== BUILD STARTED ====="
           echo "Building application..."
           echo "Build completed successfully!"
-
+          exit 1
+ 
       - name: Build Success Message
         if: success()
         run: |
           echo "===== BUILD SUCCESS ====="
           echo "Build completed successfully."
-
+          
   test:
     name: Test Application
     runs-on: ubuntu-latest
