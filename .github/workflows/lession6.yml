@@ -1,0 +1,99 @@
+name: Lesson 6 - Conditions and Failure Handling
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Application
+        run: |
+          echo "===== BUILD STARTED ====="
+          echo "Building application..."
+          echo "Build completed successfully!"
+
+      - name: Build Success Message
+        if: success()
+        run: |
+          echo "===== BUILD SUCCESS ====="
+          echo "Build completed successfully."
+
+  test:
+    name: Test Application
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+
+      - name: Run Tests
+        run: |
+          echo "===== TEST STARTED ====="
+          echo "Running application tests..."
+          echo "All tests passed successfully!"
+
+      - name: Test Success Message
+        if: success()
+        run: |
+          echo "===== TEST SUCCESS ====="
+          echo "Testing completed successfully."
+
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+
+      - name: Deploy Application
+        if: success()
+        run: |
+          echo "===== DEPLOY STARTED ====="
+          echo "Deploying application..."
+          echo "Application deployed successfully!"
+
+  failure-handling:
+    name: Failure Handling
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - test
+      - deploy
+    if: ${{ failure() }}
+
+    steps:
+
+      - name: Handle Pipeline Failure
+        run: |
+          echo "===== PIPELINE FAILURE ====="
+          echo "One or more jobs failed."
+          echo "Failure handling process started."
+
+  cleanup:
+    name: Cleanup
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - test
+      - deploy
+      - failure-handling
+    if: ${{ always() }}
+
+    steps:
+
+      - name: Cleanup
+        run: |
+          echo "===== CLEANUP ====="
+          echo "Cleanup process executed."
+          echo "Pipeline execution finished."
