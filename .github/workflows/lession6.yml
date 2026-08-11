@@ -23,8 +23,7 @@ jobs:
           echo "===== BUILD STARTED ====="
           echo "Building application..."
           echo "Build completed successfully!"
-          exit 1
- 
+           
       - name: Build Success Message
         if: success()
         run: |
