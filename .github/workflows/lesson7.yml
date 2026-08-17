@@ -1,0 +1,53 @@
+name: Lesson 7 - Matrix Builds
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    name: Test on ${{ matrix.os }} with Node ${{ matrix.node-version }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+
+        node-version:
+          - 20
+          - 22
+
+    steps:
+
+      - name: Display Environment
+        run: |
+          echo "===== MATRIX TEST ====="
+          echo "Operating System: ${{ matrix.os }}"
+          echo "Node Version: ${{ matrix.node-version }}"
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Check Node Version
+        run: |
+          node --version
+          npm --version
+
+      - name: Run Test
+        run: |
+          echo "===== TEST STARTED ====="
+          echo "Testing application..."
+          echo "Operating System: ${{ matrix.os }}"
+          echo "Node Version: ${{ matrix.node-version }}"
+          echo "All tests passed successfully!"
