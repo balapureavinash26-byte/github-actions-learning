@@ -13,3 +13,6 @@ jobs:
     name: Call Reusable CI Workflow
 
     uses: ./.github/workflows/reusable-ci.yml
+
+    with:
+      app_name: Payroll Application

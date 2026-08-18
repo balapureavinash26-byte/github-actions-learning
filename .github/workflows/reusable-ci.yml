@@ -2,6 +2,11 @@ name: Reusable CI Workflow
 
 on:
   workflow_call:
+    inputs:
+      app_name:
+        description: "Application name"
+        required: true
+        type: string
 
 jobs:
 
@@ -18,11 +23,11 @@ jobs:
         run: |
           echo "===== REUSABLE WORKFLOW ====="
           echo "Build started..."
-          echo "Building application..."
+          echo "Building ${{ inputs.app_name }}..."
           echo "Build completed successfully!"
 
       - name: Run Tests
         run: |
           echo "===== TEST ====="
-          echo "Running tests..."
+          echo "Testing ${{ inputs.app_name }}..."
           echo "All tests passed successfully!"
