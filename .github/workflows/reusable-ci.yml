@@ -1,0 +1,28 @@
+name: Reusable CI Workflow
+
+on:
+  workflow_call:
+
+jobs:
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Application
+        run: |
+          echo "===== REUSABLE WORKFLOW ====="
+          echo "Build started..."
+          echo "Building application..."
+          echo "Build completed successfully!"
+
+      - name: Run Tests
+        run: |
+          echo "===== TEST ====="
+          echo "Running tests..."
+          echo "All tests passed successfully!"
