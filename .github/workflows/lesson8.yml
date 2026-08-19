@@ -16,3 +16,6 @@ jobs:
 
     with:
       app_name: Payroll Application
+
+    secrets:
+      demo_secret: ${{ secrets.LESSON8_SECRET }}

@@ -2,11 +2,17 @@ name: Reusable CI Workflow
 
 on:
   workflow_call:
+
     inputs:
       app_name:
         description: "Application name"
         required: true
         type: string
+
+    secrets:
+      demo_secret:
+        description: "Demo secret"
+        required: true
 
 jobs:
 
@@ -31,3 +37,16 @@ jobs:
           echo "===== TEST ====="
           echo "Testing ${{ inputs.app_name }}..."
           echo "All tests passed successfully!"
+
+      - name: Check Secret Availability
+        env:
+          DEMO_SECRET: ${{ secrets.demo_secret }}
+        run: |
+          echo "===== SECRET CHECK ====="
+
+          if [ -n "$DEMO_SECRET" ]; then
+            echo "Secret is available to the reusable workflow."
+          else
+            echo "Secret is NOT available."
+            exit 1
+          fi
