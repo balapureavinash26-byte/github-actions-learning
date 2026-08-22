@@ -1,0 +1,17 @@
+name: Lesson 8 - HR Application
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  call-reusable-workflow:
+    name: Build HR Application
+
+    uses: ./.github/workflows/reusable-ci.yml
+
+    with:
+      app_name: HR Application
+
+    secrets:
+      demo_secret: ${{ secrets.LESSON8_SECRET }}
